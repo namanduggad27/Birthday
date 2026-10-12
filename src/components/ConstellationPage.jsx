@@ -13,37 +13,23 @@ const constellationStars = [
   { id: 5, name: 'The Star of Dreams', x: 900, y: 130, virtue: 'Infinite Horizon', message: 'Same girl, bigger dreams! The future holds adventures and victories beyond your wildest imagination.' }
 ];
 
-export default function ConstellationPage({ onBackToHome }) {
+export default function ConstellationPage({ onBackToHome, onExplore }) {
   const [activeStar, setActiveStar] = useState(null);
 
   const triggerConstellationExplore = () => {
-    // Stardust Fireworks
-    const duration = 3 * 1000;
-    const animationEnd = Date.now() + duration;
-
-    const interval = setInterval(() => {
-      const timeLeft = animationEnd - Date.now();
-      if (timeLeft <= 0) return clearInterval(interval);
-
-      confetti({
-        particleCount: 50,
-        startVelocity: 35,
-        spread: 360,
-        ticks: 80,
-        origin: {
-          x: Math.random() * 0.6 + 0.2,
-          y: Math.random() * 0.4 + 0.2
-        },
-        colors: ['#fde047', '#fef08a', '#eab308', '#f59e0b', '#ffffff', '#c084fc']
-      });
-    }, 280);
-
-    setActiveStar({
-      category: 'Constellation of Her',
-      title: 'A World That Believes In You ✨',
-      quote: 'Every star in this sky is shining for you tonight...',
-      description: 'You are loved beyond words, admired for your boundless strength, and celebrated today and every single day. Keep shining as brightly as you do.'
+    // Celebratory stardust fireworks
+    confetti({
+      particleCount: 70,
+      spread: 90,
+      origin: { y: 0.65 },
+      colors: ['#fde047', '#fef08a', '#eab308', '#f59e0b', '#ffffff', '#c084fc']
     });
+
+    if (onExplore) {
+      setTimeout(() => {
+        onExplore();
+      }, 350);
+    }
   };
 
   return (
@@ -67,8 +53,8 @@ export default function ConstellationPage({ onBackToHome }) {
         onClick={onBackToHome}
         title="Return to Welcome Page"
       >
-        <ArrowLeft size={16} />
-        <span>Back</span>
+        <ArrowLeft size={16} className="nav-back-icon" />
+        <span className="nav-back-text">Back</span>
       </button>
 
       {/* UI Overlay Layer */}

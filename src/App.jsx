@@ -4,6 +4,7 @@ import confetti from 'canvas-confetti';
 import StarrySkyCanvas from './components/StarrySkyCanvas';
 import HangingPolaroids from './components/HangingPolaroids';
 import ConstellationPage from './components/ConstellationPage';
+import LetterPage from './components/LetterPage';
 import MemoryModal from './components/MemoryModal';
 import './App.css';
 
@@ -68,7 +69,7 @@ export default function App() {
 
   return (
     <AnimatePresence mode="wait">
-      {currentPage === 'welcome' ? (
+      {currentPage === 'welcome' && (
         <motion.main 
           key="welcome"
           className="scene-viewport"
@@ -286,7 +287,9 @@ export default function App() {
             onClose={() => setActiveModalItem(null)} 
           />
         </motion.main>
-      ) : (
+      )}
+
+      {currentPage === 'constellation' && (
         <motion.div
           key="constellation"
           initial={{ opacity: 0 }}
@@ -294,7 +297,25 @@ export default function App() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <ConstellationPage onBackToHome={() => setCurrentPage('welcome')} />
+          <ConstellationPage 
+            onBackToHome={() => setCurrentPage('welcome')} 
+            onExplore={() => setCurrentPage('letter')}
+          />
+        </motion.div>
+      )}
+
+      {currentPage === 'letter' && (
+        <motion.div
+          key="letter"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.7 }}
+        >
+          <LetterPage 
+            onBackToConstellation={() => setCurrentPage('constellation')}
+            onBackToHome={() => setCurrentPage('welcome')}
+          />
         </motion.div>
       )}
     </AnimatePresence>

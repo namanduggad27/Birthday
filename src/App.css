@@ -21,6 +21,12 @@
   z-index: 1;
 }
 
+.constellation-bg-layer {
+  background-image: url('./assets/constellation_bg_hd.jpg');
+  background-size: 100% 100%;
+  background-position: center center;
+}
+
 /* Atmospheric Vignette & Depth Layer */
 .sky-depth-overlay {
   position: absolute;
@@ -33,16 +39,33 @@
 /* Warm Lantern Glow Pulse */
 .lantern-glow-pulse {
   position: absolute;
-  right: 6.8%;
-  bottom: 27%;
-  width: 140px;
-  height: 140px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(251, 191, 36, 0.55) 0%, rgba(245, 158, 11, 0.22) 50%, transparent 70%);
   filter: blur(14px);
   pointer-events: none;
   z-index: 3;
   animation: lanternFlicker 3s infinite ease-in-out;
+}
+
+.lantern-glow-pulse {
+  right: 6.8%;
+  bottom: 27%;
+  width: 140px;
+  height: 140px;
+}
+
+.lantern-left-pulse {
+  left: 3.5%;
+  bottom: 28%;
+  width: 140px;
+  height: 140px;
+}
+
+.lantern-right-pulse {
+  right: 5.5%;
+  bottom: 2%;
+  width: 130px;
+  height: 130px;
 }
 
 @keyframes lanternFlicker {
@@ -81,6 +104,36 @@
   pointer-events: none;
 }
 
+/* Back Button for Navigation */
+.nav-back-btn {
+  position: absolute;
+  top: 22px;
+  left: 28px;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(254, 240, 138, 0.35);
+  border-radius: 9999px;
+  padding: 8px 18px;
+  color: #fef08a;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition: all 0.25s ease;
+  z-index: 60;
+}
+
+.nav-back-btn:hover {
+  background: rgba(30, 41, 59, 0.85);
+  border-color: rgba(254, 240, 138, 0.7);
+  transform: translateX(-2px);
+  box-shadow: 0 6px 25px rgba(251, 191, 36, 0.35);
+}
 
 /* Realistic Overlapping Polaroid Cluster (Anchored to Left Tree) */
 .polaroids-hang-tree {
@@ -561,6 +614,198 @@
 
 .books-spines-overlay:hover {
   transform: scale(1.04);
+}
+
+/* ======================================================== */
+/* CONSTELLATION PAGE STYLES ("A World That Believes In Her") */
+/* ======================================================== */
+
+/* Constellation Page Fullscreen Edge-to-Edge (Zero Black Borders) */
+.constellation-page-viewport {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #03050a;
+}
+
+.constellation-top-left-poem {
+  position: absolute;
+  top: 10%;
+  left: 6.5%;
+  text-align: left;
+  font-family: var(--font-hand);
+  font-size: clamp(1.05rem, 1.35vw, 1.45rem);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 0 15px rgba(186, 230, 253, 0.25);
+  letter-spacing: 0.5px;
+  pointer-events: auto;
+  cursor: default;
+  z-index: 25;
+}
+
+.doodle-heart-left {
+  font-size: 1.8rem;
+  color: #fff9d2;
+  margin-bottom: 6px;
+  filter: drop-shadow(0 0 8px rgba(254, 240, 138, 0.8));
+  animation: heartPulse 3s infinite ease-in-out;
+}
+
+.constellation-top-right-poem {
+  position: absolute;
+  top: 16%;
+  right: 6%;
+  text-align: left;
+  font-family: var(--font-hand);
+  font-size: clamp(1.05rem, 1.35vw, 1.45rem);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 0 15px rgba(186, 230, 253, 0.25);
+  letter-spacing: 0.5px;
+  pointer-events: auto;
+  cursor: default;
+  z-index: 25;
+}
+
+.constellation-center-showcase {
+  position: absolute;
+  top: 44%;
+  left: 52%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: auto;
+  width: min(92vw, 1020px);
+  z-index: 30;
+}
+
+.constellation-titles-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title-world-that {
+  font-family: var(--font-serif);
+  font-size: clamp(2.6rem, 3.8vw, 4.4rem);
+  font-weight: 500;
+  color: #ffffff;
+  letter-spacing: 2px;
+  line-height: 1;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.3);
+  margin-bottom: -10px;
+}
+
+.title-believes-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.title-believes {
+  font-family: var(--font-cursive);
+  font-size: clamp(4.8rem, 7.8vw, 8.2rem);
+  color: #fffbe0;
+  line-height: 0.95;
+  text-shadow:
+    0 0 10px rgba(254, 240, 138, 0.9),
+    0 0 25px rgba(250, 204, 21, 0.75),
+    0 0 45px rgba(234, 179, 8, 0.6),
+    0 0 75px rgba(217, 119, 6, 0.4);
+  animation: goldenBreathe 4s infinite alternate ease-in-out;
+  cursor: default;
+  user-select: none;
+}
+
+.title-believes-heart {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3vw, 3.2rem);
+  color: #fffbeb;
+  filter: drop-shadow(0 0 10px rgba(254, 240, 138, 0.85));
+  animation: heartPulse 2.8s infinite ease-in-out;
+  margin-top: 15px;
+}
+
+/* Decorative Star Divider: ── ⭐ ── */
+.decorative-star-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 220px;
+  margin-top: -6px;
+  margin-bottom: 8px;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1.5px;
+  background: linear-gradient(to right, transparent, rgba(254, 240, 138, 0.8), transparent);
+  box-shadow: 0 0 6px rgba(254, 240, 138, 0.5);
+}
+
+.divider-star {
+  font-size: 15px;
+  color: #fde047;
+  filter: drop-shadow(0 0 8px rgba(254, 240, 138, 0.9));
+  animation: starRotate 8s linear infinite;
+}
+
+/* The Major 5-Star Constellation System */
+.constellation-stars-system {
+  width: 100%;
+  max-width: 950px;
+  height: auto;
+  position: relative;
+  margin-top: -12px;
+}
+
+.constellation-system-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 0 18px rgba(251, 191, 36, 0.45));
+}
+
+.constellation-beam-line {
+  stroke-dasharray: 4 0;
+  animation: beamGlowPulse 3s infinite alternate ease-in-out;
+}
+
+@keyframes beamGlowPulse {
+  0% { stroke: rgba(254, 240, 138, 0.7); stroke-width: 2.2; }
+  100% { stroke: rgba(255, 255, 255, 0.95); stroke-width: 2.8; filter: drop-shadow(0 0 10px rgba(254, 240, 138, 1)); }
+}
+
+.star-hover-burst {
+  cursor: pointer;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+}
+
+.star-hover-burst:hover {
+  transform: scale(1.16);
+  filter: drop-shadow(0 0 20px rgba(254, 240, 138, 1)) drop-shadow(0 0 35px rgba(245, 158, 11, 0.75));
+}
+
+.star-hover-burst:active {
+  transform: scale(1.06);
+}
+
+.btn-explore-constellation {
+  padding: 12px 38px;
+  background: linear-gradient(135deg, rgba(255, 248, 220, 0.95) 0%, rgba(253, 224, 71, 0.88) 50%, rgba(245, 158, 11, 0.95) 100%);
+}
+
+.btn-star-icon {
+  font-size: 1.1rem;
+  filter: drop-shadow(0 0 6px rgba(254, 240, 138, 0.9));
 }
 
 /* Modal Overlay & Styling */

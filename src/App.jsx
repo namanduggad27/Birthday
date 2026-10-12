@@ -5,6 +5,7 @@ import StarrySkyCanvas from './components/StarrySkyCanvas';
 import HangingPolaroids from './components/HangingPolaroids';
 import ConstellationPage from './components/ConstellationPage';
 import LetterPage from './components/LetterPage';
+import JournalPage from './components/JournalPage';
 import MemoryModal from './components/MemoryModal';
 import './App.css';
 
@@ -314,7 +315,21 @@ export default function App() {
         >
           <LetterPage 
             onBackToConstellation={() => setCurrentPage('constellation')}
-            onBackToHome={() => setCurrentPage('welcome')}
+            onMoveForward={() => setCurrentPage('journal')}
+          />
+        </motion.div>
+      )}
+
+      {currentPage === 'journal' && (
+        <motion.div
+          key="journal"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.7 }}
+        >
+          <JournalPage 
+            onBackToLetter={() => setCurrentPage('letter')}
           />
         </motion.div>
       )}

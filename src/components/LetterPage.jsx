@@ -56,20 +56,26 @@ const col3Items = [
   { id: '3-5', rot: -2, hasPlay: true }
 ];
 
-export default function LetterPage({ onBackToConstellation }) {
+export default function LetterPage({ onBackToConstellation, onMoveForward }) {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
 
   const goToNext = () => {
     if (currentPageIndex < pagesData.length - 1) {
       setCurrentPageIndex((prev) => prev + 1);
     } else {
-      // Golden celebratory stardust burst on final page
+      // Golden celebratory stardust burst when moving forward
       confetti({
-        particleCount: 90,
-        spread: 110,
-        origin: { y: 0.6 },
-        colors: ['#fde047', '#fef08a', '#eab308', '#f59e0b', '#ffffff', '#c084fc', '#fb7185']
+        particleCount: 60,
+        spread: 90,
+        origin: { y: 0.65 },
+        colors: ['#fde047', '#fef08a', '#eab308', '#f59e0b', '#ffffff', '#c084fc']
       });
+
+      if (onMoveForward) {
+        setTimeout(() => {
+          onMoveForward();
+        }, 350);
+      }
     }
   };
 
@@ -156,7 +162,7 @@ export default function LetterPage({ onBackToConstellation }) {
                 className="btn-chapter-next"
                 onClick={goToNext}
               >
-                {currentPageIndex === pagesData.length - 1 ? 'Celebrate ✦' : 'Next →'}
+                {currentPageIndex === pagesData.length - 1 ? 'Move Forward →' : 'Next →'}
               </button>
             </div>
 

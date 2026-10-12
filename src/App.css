@@ -1422,3 +1422,68 @@
 .polaroid-bottom-chin {
   height: 4px;
 }
+
+/* ======================================================== */
+/* JOURNAL WINDOW PAGE STYLES (Page 4 - Sunrise Journal) */
+/* ======================================================== */
+
+.journal-page-viewport {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #03050a;
+}
+
+.journal-window-bg-layer {
+  background-image: url('./assets/journal_window_hd.jpg');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.journal-lantern-glow {
+  left: 3.5%;
+  bottom: 22%;
+  width: 150px;
+  height: 150px;
+}
+
+.sunrise-horizon-glow {
+  position: absolute;
+  left: 61.5%;
+  bottom: 41%;
+  width: 140px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(254, 215, 170, 0.65) 0%, rgba(251, 146, 60, 0.3) 50%, transparent 80%);
+  filter: blur(16px);
+  pointer-events: none;
+  z-index: 3;
+  animation: lanternFlicker 4s infinite ease-in-out;
+}
+
+/* Open Journal Parchment Container */
+.journal-parchment-container {
+  position: absolute;
+  left: 8.5%;
+  top: 16%;
+  width: 33%;
+  height: 65.5%;
+  z-index: 30;
+  pointer-events: auto;
+  box-sizing: border-box;
+  padding: 20px 24px 14px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.journal-entry-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+}

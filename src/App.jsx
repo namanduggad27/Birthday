@@ -1,49 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Volume2, VolumeX } from 'lucide-react';
 import StarrySkyCanvas from './components/StarrySkyCanvas';
+import HangingPolaroids from './components/HangingPolaroids';
 import MemoryModal from './components/MemoryModal';
 import './App.css';
-
-// Web Audio Ambient Synthesizer for cozy night melody
-const playMelodyChord = (step = 0) => {
-  try {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return;
-    const ctx = new AudioContext();
-
-    const chords = [
-      [261.63, 329.63, 392.00, 493.88], // Cmaj7
-      [220.00, 261.63, 329.63, 392.00], // Am7
-      [174.61, 220.00, 261.63, 329.63], // Fmaj7
-      [196.00, 246.94, 293.66, 392.00]  // G
-    ];
-
-    const currentNotes = chords[step % chords.length];
-
-    currentNotes.forEach((freq, idx) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, ctx.currentTime);
-
-      const delay = idx * 0.12;
-      gain.gain.setValueAtTime(0, ctx.currentTime + delay);
-      gain.gain.linearRampToValueAtTime(0.04, ctx.currentTime + delay + 0.3);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + delay + 2.8);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start(ctx.currentTime + delay);
-      osc.stop(ctx.currentTime + delay + 3.0);
-    });
-  } catch {
-    // Autoplay restrictions handle
-  }
-};
 
 const hotspotsData = {
   polaroid1: {
@@ -85,30 +46,10 @@ const hotspotsData = {
 };
 
 export default function App() {
-  const [soundEnabled, setSoundEnabled] = useState(false);
   const [activeModalItem, setActiveModalItem] = useState(null);
-
-  // Periodic subtle ambient melody when sound is enabled
-  useEffect(() => {
-    if (!soundEnabled) return;
-    let step = 0;
-    playMelodyChord(step);
-
-    const interval = setInterval(() => {
-      step++;
-      playMelodyChord(step);
-    }, 4500);
-
-    return () => clearInterval(interval);
-  }, [soundEnabled]);
 
   // Grand Golden Celebration Trigger
   const handleBeginJourney = () => {
-    if (soundEnabled) {
-      playMelodyChord(0);
-      setTimeout(() => playMelodyChord(1), 800);
-    }
-
     // Grand Golden Stardust Fireworks
     const duration = 3.5 * 1000;
     const animationEnd = Date.now() + duration;
@@ -140,7 +81,7 @@ export default function App() {
 
   return (
     <main className="scene-viewport">
-      {/* Background Scenic Artwork */}
+      {/* Background Scenic Artwork: Edge to Edge (No black borders) */}
       <div className="scene-background" />
 
       {/* Atmospheric Vignette & Depth */}
@@ -155,15 +96,8 @@ export default function App() {
       {/* Soft Fairy Lights Glow (Left) */}
       <div className="fairy-lights-glow" />
 
-      {/* Top Right Sound Toggle */}
-      <button 
-        className="ambient-sound-btn"
-        onClick={() => setSoundEnabled(!soundEnabled)}
-        title={soundEnabled ? "Mute night melody" : "Play night melody"}
-      >
-        {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
-        <span>{soundEnabled ? "Music: On" : "Music: Off"}</span>
-      </button>
+      {/* Realistic Hanging Polaroids & Kraft Note on the Tree */}
+      <HangingPolaroids onSelectMemory={(key) => setActiveModalItem(hotspotsData[key])} />
 
       {/* Interactive UI Overlay Layer */}
       <div className="scene-ui-layer">
@@ -181,22 +115,74 @@ export default function App() {
           <p>Proud of you ... ♡</p>
         </motion.div>
 
-        {/* Left Sticky Note Handwritten Text Overlay */}
-        <motion.div 
-          className="left-note-overlay"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          onClick={() => setActiveModalItem(hotspotsData.note)}
-          title="Click note"
-        >
-          <p>Different</p>
-          <p>places...</p>
-          <p>Same dreams... ♡</p>
-        </motion.div>
-
         {/* Centerpiece Showcase */}
         <div className="center-showcase">
+          {/* Dual Constellation Arcs & Paper Airplane SVG */}
+          <div className="constellation-svg-wrap">
+            <svg viewBox="0 0 660 250" width="100%" height="100%" fill="none" style={{ overflow: 'visible' }}>
+              {/* Primary Constellation Dashed Arc leading over 'Happy' to the right */}
+              <path
+                d="M 15,190 C 130,35 390,16 560,46"
+                stroke="rgba(254, 240, 138, 0.52)"
+                strokeWidth="1.8"
+                strokeDasharray="6 6"
+                className="constellation-path"
+              />
+
+              {/* Secondary Delicate Loop on Left */}
+              <path
+                d="M 15,190 C 70,110 130,80 155,120 C 175,150 220,120 260,80"
+                stroke="rgba(254, 240, 138, 0.35)"
+                strokeWidth="1.3"
+                strokeDasharray="4 5"
+              />
+
+              {/* Floating Hand-Drawn Heart Doodle under the nebula */}
+              <path
+                d="M 500,125 C 500,115 512,110 520,118 C 528,110 540,115 540,125 C 540,138 520,150 520,150 C 520,150 500,138 500,125 Z"
+                stroke="rgba(255, 255, 255, 0.75)"
+                strokeWidth="1.4"
+                fill="none"
+                style={{ filter: 'drop-shadow(0 0 6px rgba(254, 240, 138, 0.6))' }}
+              />
+
+              {/* Twinkling Star Nodes along the constellation */}
+              <circle cx="85" cy="120" r="2.5" fill="#fef08a" opacity="0.85" />
+              <circle cx="210" cy="54" r="3" fill="#ffffff" opacity="0.9" />
+              <circle cx="370" cy="24" r="3.5" fill="#fde047" opacity="1" />
+              <circle cx="490" cy="33" r="2.5" fill="#ffffff" opacity="0.85" />
+
+              {/* Hand-Drawn Constellation Star Doodle at peak */}
+              <polygon
+                points="370,16 373,22 380,23 375,28 376,34 370,31 364,34 365,28 360,23 367,22"
+                stroke="#fde047"
+                strokeWidth="1.3"
+                fill="none"
+              />
+
+              {/* Trailing Starlight Dots behind the Airplane */}
+              <circle cx="538" cy="42" r="1.5" fill="#ffffff" opacity="0.7" />
+              <circle cx="522" cy="46" r="1.2" fill="#fef08a" opacity="0.6" />
+
+              {/* Floating Paper Airplane right at the tip of the line on the RIGHT */}
+              <g transform="translate(555, 36)">
+                <g className="paper-airplane-float">
+                  <polygon
+                    points="0,14 30,0 12,24"
+                    stroke="#ffffff"
+                    strokeWidth="1.6"
+                    fill="rgba(255, 255, 255, 0.22)"
+                  />
+                  <line x1="30" y1="0" x2="10" y2="16" stroke="#ffffff" strokeWidth="1.3" />
+                </g>
+              </g>
+
+              {/* Small Star Doodles */}
+              <polygon points="210,48 212,52 216,53 213,56 214,60 210,58 206,60 207,56 204,53 208,52" stroke="#fef08a" strokeWidth="1" fill="none" />
+              <polygon points="490,27 491,30 494,31 492,33 493,36 490,34 487,36 488,33 486,31 489,30" stroke="#ffffff" strokeWidth="1" fill="none" />
+            </svg>
+          </div>
+
           {/* Title: Happy */}
           <motion.h1 
             className="title-happy"
@@ -218,14 +204,15 @@ export default function App() {
             <span className="title-heart">♡</span>
           </motion.div>
 
-          {/* Vintage Textured Paper Ribbon Badge */}
+          {/* Two-Line Compact Vintage Torn Paper Ribbon Badge */}
           <motion.div 
-            className="ribbon-banner"
+            className="ribbon-banner-twoline"
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            to the girl who makes the world brighter ♡
+            <span>to the girl who makes</span>
+            <span>the world brighter ♡</span>
           </motion.div>
 
           {/* Subtitle Paragraph */}
@@ -269,7 +256,7 @@ export default function App() {
           </motion.div>
         </div>
 
-        {/* Open Scrapbook Note Overlay (Bottom Right) */}
+        {/* Open Scrapbook Note Overlay (Bottom Right on Open Journal Page) */}
         <motion.div 
           className="journal-note-overlay"
           initial={{ opacity: 0 }}
@@ -279,7 +266,7 @@ export default function App() {
           title="Click to view journal entry"
         >
           <p>A story</p>
-          <p>still in progress... ♡</p>
+          <p>still in progress... <span className="journal-heart">♡</span></p>
         </motion.div>
 
         {/* Books Stack Spine Titles Overlay */}
@@ -295,25 +282,6 @@ export default function App() {
           <p style={{ marginTop: '4px' }}>Same Girl</p>
           <p>Bigger Dreams</p>
         </motion.div>
-
-        {/* Interactive Hotspots for Polaroid Photos on Tree (Left) */}
-        <div 
-          className="hotspot-target hotspot-polaroid-1"
-          onClick={() => setActiveModalItem(hotspotsData.polaroid1)}
-          title="Click to view memory: Sunset by the Waters"
-        />
-
-        <div 
-          className="hotspot-target hotspot-polaroid-2"
-          onClick={() => setActiveModalItem(hotspotsData.polaroid2)}
-          title="Click to view memory: Field of Daisies"
-        />
-
-        <div 
-          className="hotspot-target hotspot-polaroid-3"
-          onClick={() => setActiveModalItem(hotspotsData.polaroid3)}
-          title="Click to view memory: Historic Town"
-        />
       </div>
 
       {/* Interactive Detail Modal */}

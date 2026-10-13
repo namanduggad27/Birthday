@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Sparkles, Heart } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import StarrySkyCanvas from './StarrySkyCanvas';
+import GoldParticleCanvas from './StarrySkyCanvas';
 
 const journalEntries = [
   {
@@ -31,7 +31,7 @@ export default function JournalPage({ onBackToLetter }) {
       particleCount: 85,
       spread: 120,
       origin: { y: 0.6 },
-      colors: ['#fde047', '#fef08a', '#eab308', '#f59e0b', '#ffffff', '#c084fc', '#fb7185']
+      colors: ['#c9a84c', '#d4af6f', '#e8c97a', '#f0e0a0', '#ffffff', '#f5e6c8']
     });
   };
 
@@ -39,23 +39,14 @@ export default function JournalPage({ onBackToLetter }) {
 
   return (
     <main className="scene-viewport journal-page-viewport">
-      {/* Background 4K HD Journal Window Scenery */}
-      <div className="scene-background journal-window-bg-layer" />
+      {/* Ambient Gold Glow */}
+      <div className="page-ambient-glow" />
 
-      {/* Atmospheric Vignette & Depth */}
-      <div className="sky-depth-overlay" />
+      {/* Gold Particle Canvas */}
+      <GoldParticleCanvas />
 
-      {/* Live Canvas Starfield Shining Through the Open Window */}
-      <StarrySkyCanvas />
-
-      {/* Warm Ambient Glow on Left Lantern */}
-      <div className="lantern-glow-pulse journal-lantern-glow" />
-
-      {/* Sunrise Horizon Golden Glow Pulse */}
-      <div className="sunrise-horizon-glow" />
-
-      {/* Expanding Back Button (Icon-Only by default, reveals text on hover) */}
-      <button 
+      {/* Back Button */}
+      <button
         className="nav-back-btn"
         onClick={onBackToLetter}
         title="Back to Letter"
@@ -64,10 +55,10 @@ export default function JournalPage({ onBackToLetter }) {
         <span className="nav-back-text">Back</span>
       </button>
 
-      {/* Open Journal Parchment Page Container */}
+      {/* Left Dark Glass Panel */}
       <div className="journal-parchment-container">
         <AnimatePresence mode="wait">
-          <motion.div 
+          <motion.div
             key={currentEntry.id}
             className="journal-entry-card"
             initial={{ opacity: 0, y: 12 }}
@@ -75,14 +66,14 @@ export default function JournalPage({ onBackToLetter }) {
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.35, ease: 'easeInOut' }}
           >
-            {/* Chapter Tag with Symmetrical Dividers */}
+            {/* Chapter Tag */}
             <div className="chapter-badge-row">
               <span className="chapter-badge-divider" />
               <span className="chapter-badge-text">{currentEntry.tag}</span>
               <span className="chapter-badge-divider" />
             </div>
 
-            {/* Main Title */}
+            {/* Title */}
             <h1 className="chapter-main-title">
               <span className="title-row-one">{currentEntry.titleLine1}</span>
               <span className="title-row-two">{currentEntry.titleLine2}</span>
@@ -94,21 +85,21 @@ export default function JournalPage({ onBackToLetter }) {
               <span className="chapter-subtitle-text">{currentEntry.subtitle}</span>
             </div>
 
-            {/* Centered Journal Body Text */}
+            {/* Journal Body Text */}
             <p className="chapter-paragraph-text">
               {currentEntry.text}
             </p>
 
             {/* Navigation & Action Buttons */}
             <div className="chapter-nav-buttons-row">
-              <button 
+              <button
                 className="btn-chapter-prev"
                 onClick={() => setEntryIndex((prev) => Math.max(0, prev - 1))}
                 disabled={entryIndex === 0}
               >
                 ← Previous
               </button>
-              <button 
+              <button
                 className="btn-chapter-next"
                 onClick={() => {
                   if (entryIndex < journalEntries.length - 1) {
@@ -118,23 +109,23 @@ export default function JournalPage({ onBackToLetter }) {
                   }
                 }}
               >
-                {entryIndex === journalEntries.length - 1 ? 'Celebrate ✨' : 'Next →'}
+                {entryIndex === journalEntries.length - 1 ? 'Celebrate ✦' : 'Next →'}
               </button>
             </div>
 
-            {/* Bottom Progress Track */}
+            {/* Progress Track */}
             <div className="chapter-progress-track">
               <div className="chapter-progress-line" />
               <div className="chapter-dots-container">
                 {journalEntries.map((_, idx) => (
-                  <button 
+                  <button
                     key={idx}
                     className={`chapter-track-node ${idx === entryIndex ? 'is-active-star' : idx < entryIndex ? 'is-past-dot' : 'is-future-dot'}`}
                     onClick={() => setEntryIndex(idx)}
                     title={`Page ${idx + 1}`}
                   >
                     {idx === entryIndex ? (
-                      <span className="track-golden-star">⭐</span>
+                      <span className="track-golden-star">✦</span>
                     ) : (
                       <span className="track-dot-circle" />
                     )}

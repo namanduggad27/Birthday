@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import StarrySkyCanvas from './components/StarrySkyCanvas';
+import GoldParticleCanvas from './components/StarrySkyCanvas';
 import HangingPolaroids from './components/HangingPolaroids';
 import ConstellationPage from './components/ConstellationPage';
 import LetterPage from './components/LetterPage';
@@ -29,19 +29,19 @@ const hotspotsData = {
     description: 'Walking through ancient cobblestone paths, dreaming big and fearless with a heart full of wonder.'
   },
   note: {
-    category: 'Handwritten Note',
+    category: 'A Note for You',
     title: 'A Little Reminder',
     quote: 'Different places... Same dreams... ♡',
     description: 'No matter where life carries your steps, the dreams in your eyes and the kindness in your soul remain unchanged.'
   },
   journal: {
-    category: 'Open Scrapbook',
+    category: 'Open Journal',
     title: 'A Story Still in Progress...',
     quote: 'Every chapter getting sweeter, bolder and brighter... ♡',
     description: 'Your life is an unfolding masterpiece of courage, gentle moments, and beautiful adventures. The best chapters are still ahead.'
   },
   books: {
-    category: 'Books on the Ledge',
+    category: 'Favorite Reads',
     title: 'Favorite Companions',
     quote: 'A Brighter Me ♡ | Same Girl Bigger Dreams',
     description: 'Hardcover stories filled with late-night reflections, big ambitions, and silent victories that made you who you are today.'
@@ -52,15 +52,13 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState('welcome');
   const [activeModalItem, setActiveModalItem] = useState(null);
 
-  // Transition from Welcome to Constellation Page
   const handleBeginJourney = () => {
-    // Grand Golden Stardust Fireworks
     confetti({
       particleCount: 70,
       startVelocity: 35,
       spread: 360,
       origin: { x: 0.5, y: 0.6 },
-      colors: ['#fef08a', '#fde047', '#eab308', '#f59e0b', '#ffffff']
+      colors: ['#c9a84c', '#d4af6f', '#e8c97a', '#f0e0a0', '#ffffff', '#f5e6c8']
     });
 
     setTimeout(() => {
@@ -71,40 +69,41 @@ export default function App() {
   return (
     <AnimatePresence mode="wait">
       {currentPage === 'welcome' && (
-        <motion.main 
+        <motion.main
           key="welcome"
           className="scene-viewport"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7 }}
         >
-          {/* Background Scenic Artwork: Edge to Edge (No black borders) */}
-          <div className="scene-background" />
+          {/* Ambient Gold Glow Layer */}
+          <div className="page-ambient-glow" />
 
-          {/* Atmospheric Vignette & Depth */}
-          <div className="sky-depth-overlay" />
+          {/* Floating Gold Particle Canvas */}
+          <GoldParticleCanvas />
 
-          {/* Live Canvas Starfield & Twinkling Night */}
-          <StarrySkyCanvas />
-
-          {/* Warm Lantern Glow Pulse */}
-          <div className="lantern-glow-pulse" />
-
-          {/* Soft Fairy Lights Glow (Left) */}
-          <div className="fairy-lights-glow" />
-
-          {/* Realistic Hanging Polaroids & Kraft Note on the Tree */}
+          {/* Hanging Polaroids (Left) */}
           <HangingPolaroids onSelectMemory={(key) => setActiveModalItem(hotspotsData[key])} />
 
           {/* Interactive UI Overlay Layer */}
           <div className="scene-ui-layer">
-            {/* Top-Right Handwritten Poem */}
-            <motion.div 
+            {/* Top-Center Editorial Page Label */}
+            <motion.div
+              className="page-label-top"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1.5, delay: 0.2 }}
+            >
+              ✦&nbsp;&nbsp;A BIRTHDAY STORY&nbsp;&nbsp;✦
+            </motion.div>
+
+            {/* Right-Side Poem — sits beside title block */}
+            <motion.div
               className="top-right-poem"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2, delay: 0.3 }}
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1.2, delay: 0.6 }}
             >
               <p>Same girl...</p>
               <p>Brighter dreams</p>
@@ -115,84 +114,104 @@ export default function App() {
 
             {/* Centerpiece Showcase */}
             <div className="center-showcase">
-              {/* Dual Constellation Arcs & Paper Airplane SVG */}
-              <div className="constellation-svg-wrap">
-                <svg viewBox="0 0 660 250" width="100%" height="100%" fill="none" style={{ overflow: 'visible' }}>
-                  {/* Primary Constellation Dashed Arc leading over 'Happy' to the right */}
-                  <path
-                    d="M 15,190 C 130,35 390,16 560,46"
-                    stroke="rgba(254, 240, 138, 0.52)"
-                    strokeWidth="1.8"
-                    strokeDasharray="6 6"
-                    className="constellation-path"
-                  />
+              {/* Scattered Gold Sparkles */}
+              <div className="sparkles-float-wrap">
+                <svg viewBox="0 0 640 140" width="100%" height="100%" fill="none" style={{ overflow: 'visible' }}>
+                  <defs>
+                    <filter id="sparkGlow" x="-60%" y="-60%" width="220%" height="220%">
+                      <feGaussianBlur stdDeviation="2.5" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
 
-                  {/* Secondary Delicate Loop on Left */}
-                  <path
-                    d="M 15,190 C 70,110 130,80 155,120 C 175,150 220,120 260,80"
-                    stroke="rgba(254, 240, 138, 0.35)"
-                    strokeWidth="1.3"
-                    strokeDasharray="4 5"
-                  />
+                  {/* Large top-center sparkle */}
+                  <polygon points="320,12 322.5,20 330,22 322.5,24 320,32 317.5,24 310,22 317.5,20"
+                    fill="#c9a84c" filter="url(#sparkGlow)" className="sparkle-b1" />
 
-                  {/* Floating Hand-Drawn Heart Doodle under the nebula */}
-                  <path
-                    d="M 500,125 C 500,115 512,110 520,118 C 528,110 540,115 540,125 C 540,138 520,150 520,150 C 520,150 500,138 500,125 Z"
-                    stroke="rgba(255, 255, 255, 0.75)"
-                    strokeWidth="1.4"
-                    fill="none"
-                    style={{ filter: 'drop-shadow(0 0 6px rgba(254, 240, 138, 0.6))' }}
-                  />
+                  {/* Medium left sparkle */}
+                  <polygon points="160,52 162,58 168,60 162,62 160,68 158,62 152,60 158,58"
+                    fill="#e8c97a" opacity="0.75" filter="url(#sparkGlow)" className="sparkle-b2" />
 
-                  {/* Twinkling Star Nodes along the constellation */}
-                  <circle cx="85" cy="120" r="2.5" fill="#fef08a" opacity="0.85" />
-                  <circle cx="210" cy="54" r="3" fill="#ffffff" opacity="0.9" />
-                  <circle cx="370" cy="24" r="3.5" fill="#fde047" opacity="1" />
-                  <circle cx="490" cy="33" r="2.5" fill="#ffffff" opacity="0.85" />
+                  {/* Medium right sparkle */}
+                  <polygon points="482,44 484,51 491,53 484,55 482,62 480,55 473,53 480,51"
+                    fill="#c9a84c" opacity="0.78" filter="url(#sparkGlow)" className="sparkle-b2" />
 
-                  {/* Hand-Drawn Constellation Star Doodle at peak */}
-                  <polygon
-                    points="370,16 373,22 380,23 375,28 376,34 370,31 364,34 365,28 360,23 367,22"
-                    stroke="#fde047"
-                    strokeWidth="1.3"
-                    fill="none"
-                  />
+                  {/* Small upper-left */}
+                  <polygon points="222,20 223.2,24 227,25 223.2,26 222,30 220.8,26 217,25 220.8,24"
+                    fill="#c9a84c" opacity="0.55" className="sparkle-b3" />
 
-                  {/* Trailing Starlight Dots behind the Airplane */}
-                  <circle cx="538" cy="42" r="1.5" fill="#ffffff" opacity="0.7" />
-                  <circle cx="522" cy="46" r="1.2" fill="#fef08a" opacity="0.6" />
+                  {/* Small upper-right */}
+                  <polygon points="418,16 419.2,20 423,21 419.2,22 418,26 416.8,22 413,21 416.8,20"
+                    fill="#e8c97a" opacity="0.52" className="sparkle-b1" />
 
-                  {/* Floating Paper Airplane right at the tip of the line on the RIGHT */}
-                  <g transform="translate(555, 36)">
-                    <g className="paper-airplane-float">
-                      <polygon
-                        points="0,14 30,0 12,24"
-                        stroke="#ffffff"
-                        strokeWidth="1.6"
-                        fill="rgba(255, 255, 255, 0.22)"
-                      />
-                      <line x1="30" y1="0" x2="10" y2="16" stroke="#ffffff" strokeWidth="1.3" />
-                    </g>
-                  </g>
+                  {/* Far-left small */}
+                  <polygon points="80,38 81,42 85,43 81,44 80,48 79,44 75,43 79,42"
+                    fill="#c9a84c" opacity="0.42" className="sparkle-b3" />
 
-                  {/* Small Star Doodles */}
-                  <polygon points="210,48 212,52 216,53 213,56 214,60 210,58 206,60 207,56 204,53 208,52" stroke="#fef08a" strokeWidth="1" fill="none" />
-                  <polygon points="490,27 491,30 494,31 492,33 493,36 490,34 487,36 488,33 486,31 489,30" stroke="#ffffff" strokeWidth="1" fill="none" />
+                  {/* Far-right small */}
+                  <polygon points="558,30 559,34 563,35 559,36 558,40 557,36 553,35 557,34"
+                    fill="#e8c97a" opacity="0.44" className="sparkle-b2" />
+
+                  {/* Micro dots — scattered depth */}
+                  <circle cx="255" cy="72" r="1.8" fill="#c9a84c" opacity="0.38" />
+                  <circle cx="385" cy="68" r="2.2" fill="#e8c97a" opacity="0.35" />
+                  <circle cx="130" cy="75" r="1.3" fill="#c9a84c" opacity="0.28" />
+                  <circle cx="510" cy="70" r="1.5" fill="#c9a84c" opacity="0.3" />
+                  <circle cx="50" cy="58" r="1" fill="#e8c97a" opacity="0.25" />
+                  <circle cx="590" cy="52" r="1.2" fill="#c9a84c" opacity="0.26" />
+                  <circle cx="320" cy="85" r="1.4" fill="#c9a84c" opacity="0.22" />
                 </svg>
               </div>
 
-              {/* Title: Happy */}
-              <motion.h1 
-                className="title-happy"
-                initial={{ opacity: 0, y: -20 }}
+              {/* Title row: Laurel | Happy | Laurel */}
+              <motion.div
+                className="title-with-laurels"
+                initial={{ opacity: 0, y: -16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.2 }}
               >
-                Happy
-              </motion.h1>
+                {/* Left botanical laurel sprig */}
+                <svg className="laurel-sprig-left" viewBox="0 0 120 56" fill="none">
+                  {/* Main stem curving inward */}
+                  <path d="M 108,30 C 80,28 52,24 18,26" stroke="#c9a84c" strokeWidth="1.1" fill="none" opacity="0.6" strokeLinecap="round"/>
+                  {/* Leaf pair 1 — nearest */}
+                  <path d="M 88,29 C 86,18 74,16 78,27" stroke="#c9a84c" strokeWidth="0.95" fill="none" opacity="0.58" strokeLinecap="round"/>
+                  <path d="M 88,30 C 86,41 74,42 78,31" stroke="#c9a84c" strokeWidth="0.95" fill="none" opacity="0.52" strokeLinecap="round"/>
+                  {/* Leaf pair 2 — middle */}
+                  <path d="M 62,27 C 59,16 47,15 51,25" stroke="#c9a84c" strokeWidth="0.9" fill="none" opacity="0.52" strokeLinecap="round"/>
+                  <path d="M 62,28 C 59,38 47,39 51,29" stroke="#c9a84c" strokeWidth="0.9" fill="none" opacity="0.46" strokeLinecap="round"/>
+                  {/* Leaf pair 3 — far */}
+                  <path d="M 36,26 C 32,17 22,17 26,25" stroke="#c9a84c" strokeWidth="0.85" fill="none" opacity="0.44" strokeLinecap="round"/>
+                  <path d="M 36,27 C 32,36 22,36 26,28" stroke="#c9a84c" strokeWidth="0.85" fill="none" opacity="0.38" strokeLinecap="round"/>
+                  {/* Tip bud */}
+                  <path d="M 16,26 C 12,21 8,22 10,25" stroke="#c9a84c" strokeWidth="0.8" fill="none" opacity="0.32" strokeLinecap="round"/>
+                </svg>
 
-              {/* Title: Birthday + Pulsing Heart */}
-              <motion.div 
+                <h1 className="title-happy">Happy</h1>
+
+                {/* Right botanical laurel sprig — mirrored */}
+                <svg className="laurel-sprig-right" viewBox="0 0 120 56" fill="none">
+                  {/* Main stem */}
+                  <path d="M 12,30 C 40,28 68,24 102,26" stroke="#c9a84c" strokeWidth="1.1" fill="none" opacity="0.6" strokeLinecap="round"/>
+                  {/* Leaf pair 1 */}
+                  <path d="M 32,29 C 34,18 46,16 42,27" stroke="#c9a84c" strokeWidth="0.95" fill="none" opacity="0.58" strokeLinecap="round"/>
+                  <path d="M 32,30 C 34,41 46,42 42,31" stroke="#c9a84c" strokeWidth="0.95" fill="none" opacity="0.52" strokeLinecap="round"/>
+                  {/* Leaf pair 2 */}
+                  <path d="M 58,27 C 61,16 73,15 69,25" stroke="#c9a84c" strokeWidth="0.9" fill="none" opacity="0.52" strokeLinecap="round"/>
+                  <path d="M 58,28 C 61,38 73,39 69,29" stroke="#c9a84c" strokeWidth="0.9" fill="none" opacity="0.46" strokeLinecap="round"/>
+                  {/* Leaf pair 3 */}
+                  <path d="M 84,26 C 88,17 98,17 94,25" stroke="#c9a84c" strokeWidth="0.85" fill="none" opacity="0.44" strokeLinecap="round"/>
+                  <path d="M 84,27 C 88,36 98,36 94,28" stroke="#c9a84c" strokeWidth="0.85" fill="none" opacity="0.38" strokeLinecap="round"/>
+                  {/* Tip bud */}
+                  <path d="M 104,26 C 108,21 112,22 110,25" stroke="#c9a84c" strokeWidth="0.8" fill="none" opacity="0.32" strokeLinecap="round"/>
+                </svg>
+              </motion.div>
+
+              {/* Title: Birthday + Heart */}
+              <motion.div
                 className="title-birthday-row"
                 initial={{ opacity: 0, scale: 0.92 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -202,19 +221,27 @@ export default function App() {
                 <span className="title-heart">♡</span>
               </motion.div>
 
-              {/* Two-Line Compact Vintage Torn Paper Ribbon Badge */}
-              <motion.div 
+              {/* Gold separator rule */}
+              <motion.div
+                className="title-gold-rule"
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ scaleX: 1, opacity: 1 }}
+                transition={{ duration: 0.9, delay: 0.55 }}
+              />
+
+              {/* Gold pill badge */}
+              <motion.div
                 className="ribbon-banner-twoline"
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
+                transition={{ duration: 0.8, delay: 0.7 }}
               >
                 <span>to the girl who makes</span>
                 <span>the world brighter ♡</span>
               </motion.div>
 
-              {/* Subtitle Paragraph */}
-              <motion.p 
+              {/* Subtitle */}
+              <motion.p
                 className="subtitle-quote"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -225,67 +252,39 @@ export default function App() {
                 and everything that makes you, YOU. ♡
               </motion.p>
 
-              {/* Glowing CTA Button */}
-              <motion.div 
-                style={{ position: 'relative' }}
+              {/* CTA Button */}
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 1 }}
               >
-                {/* Hand-Drawn Glowing Star */}
-                <div className="star-doodle-left">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                    <polygon
-                      points="12,2 14.5,8.5 21.5,9.5 16,14.5 17.5,21.5 12,18 6.5,21.5 8,14.5 2.5,9.5 9.5,8.5"
-                      stroke="#fde047"
-                      strokeWidth="1.8"
-                      fill="rgba(253, 224, 71, 0.25)"
-                    />
-                  </svg>
-                </div>
-
-                <button 
+                <button
                   className="btn-begin-journey"
                   onClick={handleBeginJourney}
                 >
                   <span>Let's Begin</span>
-                  <span style={{ fontSize: '1.25rem' }}>→</span>
+                  <span style={{ fontSize: '1.1rem', opacity: 0.8 }}>→</span>
                 </button>
               </motion.div>
             </div>
 
-            {/* Open Scrapbook Note Overlay (Bottom Right on Open Journal Page) */}
-            <motion.div 
-              className="journal-note-overlay"
+            {/* Bottom Decorative Rule */}
+            <motion.div
+              className="bottom-decorative-rule"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.7 }}
-              onClick={() => setActiveModalItem(hotspotsData.journal)}
-              title="Click to view journal entry"
+              transition={{ duration: 1.5, delay: 1.2 }}
             >
-              <p>A story</p>
-              <p>still in progress... <span className="journal-heart">♡</span></p>
-            </motion.div>
-
-            {/* Books Stack Spine Titles Overlay */}
-            <motion.div 
-              className="books-spines-overlay"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.7 }}
-              onClick={() => setActiveModalItem(hotspotsData.books)}
-              title="Click to explore books"
-            >
-              <p>A Brighter Me ♡</p>
-              <p style={{ marginTop: '4px' }}>Same Girl</p>
-              <p>Bigger Dreams</p>
+              <span className="bottom-rule-line" />
+              <span className="bottom-rule-star">✦</span>
+              <span className="bottom-rule-line" />
             </motion.div>
           </div>
 
-          {/* Interactive Detail Modal */}
-          <MemoryModal 
-            activeItem={activeModalItem} 
-            onClose={() => setActiveModalItem(null)} 
+          {/* Memory Modal */}
+          <MemoryModal
+            activeItem={activeModalItem}
+            onClose={() => setActiveModalItem(null)}
           />
         </motion.main>
       )}
@@ -298,8 +297,8 @@ export default function App() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <ConstellationPage 
-            onBackToHome={() => setCurrentPage('welcome')} 
+          <ConstellationPage
+            onBackToHome={() => setCurrentPage('welcome')}
             onExplore={() => setCurrentPage('letter')}
           />
         </motion.div>
@@ -313,7 +312,7 @@ export default function App() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7 }}
         >
-          <LetterPage 
+          <LetterPage
             onBackToConstellation={() => setCurrentPage('constellation')}
             onMoveForward={() => setCurrentPage('journal')}
           />
@@ -328,7 +327,7 @@ export default function App() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7 }}
         >
-          <JournalPage 
+          <JournalPage
             onBackToLetter={() => setCurrentPage('letter')}
           />
         </motion.div>

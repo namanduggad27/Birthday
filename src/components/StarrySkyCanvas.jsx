@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-export default function StarrySkyCanvas() {
+export default function GoldParticleCanvas() {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -19,140 +19,104 @@ export default function StarrySkyCanvas() {
     };
     window.addEventListener('resize', handleResize);
 
-    // Initialize Twinkling Stars (mostly in top 60% of screen)
-    const starCount = Math.floor((width * height) / 4500);
-    const stars = Array.from({ length: starCount }, () => ({
+    // Floating gold dust particles — slow, ambient, premium
+    const particleCount = Math.min(45, Math.floor((width * height) / 28000));
+    const particles = Array.from({ length: particleCount }, () => ({
       x: Math.random() * width,
-      y: Math.random() * (height * 0.65),
-      size: Math.random() * 1.8 + 0.4,
-      alpha: Math.random() * 0.8 + 0.2,
-      speed: Math.random() * 0.02 + 0.005,
-      increasing: Math.random() > 0.5,
-      color: Math.random() > 0.3 ? '#ffffff' : Math.random() > 0.5 ? '#fef08a' : '#bae6fd'
+      y: Math.random() * height,
+      size: Math.random() * 1.4 + 0.3,
+      speedY: -(Math.random() * 0.18 + 0.04),
+      speedX: (Math.random() - 0.5) * 0.08,
+      alpha: Math.random() * 0.45 + 0.1,
+      alphaTarget: Math.random() * 0.45 + 0.1,
+      alphaSpeed: Math.random() * 0.004 + 0.001,
+      // gold tones: champagne to warm gold
+      hue: Math.random() * 20 + 38, // 38–58 = gold range
     }));
 
-    // Floating Warm Embers / Fireflies (around fairy lights & lantern)
-    const embers = Array.from({ length: 28 }, () => ({
-      x: Math.random() * width,
-      y: height * 0.3 + Math.random() * (height * 0.65),
-      size: Math.random() * 2.2 + 0.8,
-      speedY: -(Math.random() * 0.5 + 0.2),
-      speedX: (Math.random() - 0.5) * 0.4,
-      alpha: Math.random() * 0.7 + 0.2,
-      pulse: Math.random() * 0.03 + 0.01,
-      increasing: Math.random() > 0.5
+    // Subtle horizontal shimmer lines (very faint gold scanlines)
+    const shimmerLines = Array.from({ length: 3 }, () => ({
+      y: Math.random() * height,
+      alpha: 0,
+      targetAlpha: Math.random() * 0.04 + 0.01,
+      speed: Math.random() * 0.12 + 0.04,
+      width: Math.random() * width * 0.4 + width * 0.2,
+      x: Math.random() * width * 0.5,
     }));
 
-    // Shooting Stars
-    const shootingStars = [];
-    const spawnShootingStar = () => {
-      if (shootingStars.length < 2 && Math.random() < 0.35) {
-        shootingStars.push({
-          x: Math.random() * (width * 0.7) + width * 0.1,
-          y: Math.random() * (height * 0.3),
-          length: Math.random() * 80 + 50,
-          speed: Math.random() * 8 + 10,
-          angle: Math.PI / 4 + (Math.random() - 0.5) * 0.2,
-          opacity: 1
-        });
-      }
-    };
+    let frame = 0;
 
-    let lastSpawn = 0;
-
-    const render = (time) => {
+    const draw = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Render Twinkling Stars
-      stars.forEach((star) => {
-        if (star.increasing) {
-          star.alpha += star.speed;
-          if (star.alpha >= 0.95) star.increasing = false;
-        } else {
-          star.alpha -= star.speed;
-          if (star.alpha <= 0.15) star.increasing = true;
+      // Faint ambient radial center-bottom glow
+      const grad = ctx.createRadialGradient(width / 2, height * 1.1, 0, width / 2, height * 1.1, height * 0.65);
+      grad.addColorStop(0, 'rgba(201, 168, 76, 0.04)');
+      grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, width, height);
+
+      // Draw particles
+      particles.forEach((p) => {
+        // Drift alpha toward target
+        if (p.alpha < p.alphaTarget) p.alpha = Math.min(p.alphaTarget, p.alpha + p.alphaSpeed);
+        else p.alpha = Math.max(0.05, p.alpha - p.alphaSpeed * 0.6);
+
+        // Occasionally pick new target alpha
+        if (Math.random() < 0.003) {
+          p.alphaTarget = Math.random() * 0.45 + 0.08;
         }
 
+        // Move
+        p.x += p.speedX;
+        p.y += p.speedY;
+
+        // Wrap
+        if (p.y < -10) { p.y = height + 10; p.x = Math.random() * width; }
+        if (p.x < -10) p.x = width + 10;
+        if (p.x > width + 10) p.x = -10;
+
+        // Draw gold particle as a tiny glowing dot
+        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 2.5);
+        grd.addColorStop(0, `hsla(${p.hue}, 65%, 72%, ${p.alpha})`);
+        grd.addColorStop(1, `hsla(${p.hue}, 65%, 55%, 0)`);
         ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fillStyle = star.color;
-        ctx.globalAlpha = star.alpha;
-        ctx.shadowBlur = star.size > 1.2 ? 6 : 0;
-        ctx.shadowColor = star.color;
+        ctx.arc(p.x, p.y, p.size * 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = grd;
         ctx.fill();
-        ctx.shadowBlur = 0;
       });
 
-      // Render Floating Embers
-      embers.forEach((ember) => {
-        ember.y += ember.speedY;
-        ember.x += ember.speedX;
-
-        if (ember.increasing) {
-          ember.alpha += ember.pulse;
-          if (ember.alpha >= 0.85) ember.increasing = false;
-        } else {
-          ember.alpha -= ember.pulse;
-          if (ember.alpha <= 0.1) ember.increasing = true;
+      // Draw shimmer lines
+      shimmerLines.forEach((line) => {
+        line.alpha += (line.targetAlpha - line.alpha) * 0.02;
+        line.y += line.speed;
+        if (line.y > height + 5) {
+          line.y = -5;
+          line.x = Math.random() * width * 0.5;
+          line.targetAlpha = Math.random() * 0.04 + 0.01;
         }
-
-        if (ember.y < height * 0.1) {
-          ember.y = height * 0.85 + Math.random() * (height * 0.1);
-          ember.x = Math.random() * width;
-        }
-
+        const lg = ctx.createLinearGradient(line.x, 0, line.x + line.width, 0);
+        lg.addColorStop(0, `rgba(201,168,76,0)`);
+        lg.addColorStop(0.3, `rgba(201,168,76,${line.alpha})`);
+        lg.addColorStop(0.7, `rgba(201,168,76,${line.alpha})`);
+        lg.addColorStop(1, `rgba(201,168,76,0)`);
         ctx.beginPath();
-        ctx.arc(ember.x, ember.y, ember.size, 0, Math.PI * 2);
-        ctx.fillStyle = '#fef08a';
-        ctx.globalAlpha = ember.alpha;
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = '#f59e0b';
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      });
-
-      // Spawn & Render Shooting Stars
-      if (time - lastSpawn > 3200) {
-        spawnShootingStar();
-        lastSpawn = time;
-      }
-
-      for (let i = shootingStars.length - 1; i >= 0; i--) {
-        const ss = shootingStars[i];
-        ss.x += Math.cos(ss.angle) * ss.speed;
-        ss.y += Math.sin(ss.angle) * ss.speed;
-        ss.opacity -= 0.015;
-
-        if (ss.opacity <= 0) {
-          shootingStars.splice(i, 1);
-          continue;
-        }
-
-        const tailX = ss.x - Math.cos(ss.angle) * ss.length;
-        const tailY = ss.y - Math.sin(ss.angle) * ss.length;
-
-        const gradient = ctx.createLinearGradient(tailX, tailY, ss.x, ss.y);
-        gradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-        gradient.addColorStop(1, `rgba(255, 255, 255, ${ss.opacity})`);
-
-        ctx.beginPath();
-        ctx.moveTo(tailX, tailY);
-        ctx.lineTo(ss.x, ss.y);
-        ctx.strokeStyle = gradient;
-        ctx.lineWidth = 1.8;
-        ctx.lineCap = 'round';
+        ctx.moveTo(line.x, line.y);
+        ctx.lineTo(line.x + line.width, line.y);
+        ctx.strokeStyle = lg;
+        ctx.lineWidth = 0.6;
         ctx.stroke();
-      }
+      });
 
-      ctx.globalAlpha = 1;
-      animationFrameId = requestAnimationFrame(render);
+      frame++;
+      animationFrameId = requestAnimationFrame(draw);
     };
 
-    animationFrameId = requestAnimationFrame(render);
+    draw();
 
     return () => {
-      window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -161,12 +125,12 @@ export default function StarrySkyCanvas() {
       ref={canvasRef}
       style={{
         position: 'absolute',
-        top: 0,
-        left: 0,
+        inset: 0,
         width: '100%',
         height: '100%',
         pointerEvents: 'none',
-        zIndex: 2
+        zIndex: 2,
+        opacity: 1,
       }}
     />
   );

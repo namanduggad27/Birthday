@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import StarrySkyCanvas from './StarrySkyCanvas';
+import GoldParticleCanvas from './StarrySkyCanvas';
 
 const pagesData = [
   {
@@ -63,12 +63,11 @@ export default function LetterPage({ onBackToConstellation, onMoveForward }) {
     if (currentPageIndex < pagesData.length - 1) {
       setCurrentPageIndex((prev) => prev + 1);
     } else {
-      // Golden celebratory stardust burst when moving forward
       confetti({
         particleCount: 60,
         spread: 90,
         origin: { y: 0.65 },
-        colors: ['#fde047', '#fef08a', '#eab308', '#f59e0b', '#ffffff', '#c084fc']
+        colors: ['#c9a84c', '#d4af6f', '#e8c97a', '#f0e0a0', '#ffffff', '#f5e6c8']
       });
 
       if (onMoveForward) {
@@ -89,23 +88,14 @@ export default function LetterPage({ onBackToConstellation, onMoveForward }) {
 
   return (
     <main className="scene-viewport letter-page-viewport">
-      {/* Background HD Window Scenery */}
-      <div className="scene-background letter-window-bg-layer" />
+      {/* Ambient Gold Glow */}
+      <div className="page-ambient-glow" />
 
-      {/* Atmospheric Vignette & Depth */}
-      <div className="sky-depth-overlay" />
+      {/* Gold Particle Canvas */}
+      <GoldParticleCanvas />
 
-      {/* Live Canvas Starfield Shining Through Open Window */}
-      <StarrySkyCanvas />
-
-      {/* Warm Glow on Windowsill Lantern & Jar */}
-      <div className="lantern-glow-pulse letter-lantern-glow" />
-
-      {/* Golden Guiding Star Halo at top center */}
-      <div className="guiding-star-halo" />
-
-      {/* Expanding Back Button (Icon-Only by default, reveals text on hover) */}
-      <button 
+      {/* Back Button */}
+      <button
         className="nav-back-btn"
         onClick={onBackToConstellation}
         title="Back to Constellation"
@@ -114,10 +104,10 @@ export default function LetterPage({ onBackToConstellation, onMoveForward }) {
         <span className="nav-back-text">Back</span>
       </button>
 
-      {/* Centered Parchment Note Container */}
+      {/* Left Panel — Dark Glass Text Container */}
       <div className="parchment-text-container">
         <AnimatePresence mode="wait">
-          <motion.div 
+          <motion.div
             key={currentPage.id}
             className="parchment-chapter-card"
             initial={{ opacity: 0, y: 12 }}
@@ -125,40 +115,40 @@ export default function LetterPage({ onBackToConstellation, onMoveForward }) {
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
-            {/* Top Chapter Badge with Symmetrical Dividers */}
+            {/* Chapter Badge */}
             <div className="chapter-badge-row">
               <span className="chapter-badge-divider" />
               <span className="chapter-badge-text">{currentPage.chapterTag}</span>
               <span className="chapter-badge-divider" />
             </div>
 
-            {/* Main Heading (Cute Childhood) */}
+            {/* Main Heading */}
             <h1 className="chapter-main-title">
               <span className="title-row-one">{currentPage.headingLine1}</span>
               <span className="title-row-two">{currentPage.headingLine2}</span>
             </h1>
 
-            {/* Description Subtitle */}
+            {/* Subtitle */}
             <div className="chapter-subtitle-row">
               <span className="chapter-sub-ornament">✦──</span>
               <span className="chapter-subtitle-text">{currentPage.description}</span>
             </div>
 
-            {/* Full-Coverage Centered Writing Paragraph */}
+            {/* Body Text */}
             <p className="chapter-paragraph-text">
               {currentPage.writing}
             </p>
 
-            {/* Previous & Next Navigation Buttons */}
+            {/* Navigation Buttons */}
             <div className="chapter-nav-buttons-row">
-              <button 
+              <button
                 className="btn-chapter-prev"
                 onClick={goToPrev}
                 disabled={currentPageIndex === 0}
               >
                 ← Previous
               </button>
-              <button 
+              <button
                 className="btn-chapter-next"
                 onClick={goToNext}
               >
@@ -166,19 +156,19 @@ export default function LetterPage({ onBackToConstellation, onMoveForward }) {
               </button>
             </div>
 
-            {/* Bottom Progress Track with Golden 3D Star */}
+            {/* Progress Track */}
             <div className="chapter-progress-track">
               <div className="chapter-progress-line" />
               <div className="chapter-dots-container">
                 {pagesData.map((_, idx) => (
-                  <button 
+                  <button
                     key={idx}
                     className={`chapter-track-node ${idx === currentPageIndex ? 'is-active-star' : idx < currentPageIndex ? 'is-past-dot' : 'is-future-dot'}`}
                     onClick={() => setCurrentPageIndex(idx)}
                     title={`Go to Page ${idx + 1}`}
                   >
                     {idx === currentPageIndex ? (
-                      <span className="track-golden-star">⭐</span>
+                      <span className="track-golden-star">✦</span>
                     ) : (
                       <span className="track-dot-circle" />
                     )}
@@ -190,15 +180,15 @@ export default function LetterPage({ onBackToConstellation, onMoveForward }) {
         </AnimatePresence>
       </div>
 
-      {/* 3 Endlessly Moving Lines of Polaroids on the Right */}
+      {/* 3 Endlessly Moving Polaroid Columns (Right Side) */}
       <div className="polaroid-streams-container">
-        {/* Column 1 (Scrolls Upward) */}
+        {/* Column 1 — Scrolls Upward */}
         <div className="polaroid-stream-col stream-col-1">
           <div className="fairy-light-wire" />
           <div className="stream-scroll-track scroll-up-anim">
             {col1Items.concat(col1Items).map((item, idx) => (
-              <div 
-                key={`c1-${idx}`} 
+              <div
+                key={`c1-${idx}`}
                 className="polaroid-card-item"
                 style={{ transform: `rotate(${item.rot}deg)` }}
               >
@@ -216,13 +206,13 @@ export default function LetterPage({ onBackToConstellation, onMoveForward }) {
           </div>
         </div>
 
-        {/* Column 2 (Scrolls Downward) */}
+        {/* Column 2 — Scrolls Downward */}
         <div className="polaroid-stream-col stream-col-2">
           <div className="fairy-light-wire" />
           <div className="stream-scroll-track scroll-down-anim">
             {col2Items.concat(col2Items).map((item, idx) => (
-              <div 
-                key={`c2-${idx}`} 
+              <div
+                key={`c2-${idx}`}
                 className="polaroid-card-item"
                 style={{ transform: `rotate(${item.rot}deg)` }}
               >
@@ -240,13 +230,13 @@ export default function LetterPage({ onBackToConstellation, onMoveForward }) {
           </div>
         </div>
 
-        {/* Column 3 (Scrolls Upward with Offset) */}
+        {/* Column 3 — Scrolls Upward (Offset) */}
         <div className="polaroid-stream-col stream-col-3">
           <div className="fairy-light-wire" />
           <div className="stream-scroll-track scroll-up-offset-anim">
             {col3Items.concat(col3Items).map((item, idx) => (
-              <div 
-                key={`c3-${idx}`} 
+              <div
+                key={`c3-${idx}`}
                 className="polaroid-card-item"
                 style={{ transform: `rotate(${item.rot}deg)` }}
               >

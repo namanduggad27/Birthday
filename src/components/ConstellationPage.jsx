@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { ArrowLeft, Sparkles, Heart } from 'lucide-react';
-import StarrySkyCanvas from './StarrySkyCanvas';
+import GoldParticleCanvas from './StarrySkyCanvas';
 import MemoryModal from './MemoryModal';
 
 const constellationStars = [
@@ -17,12 +17,11 @@ export default function ConstellationPage({ onBackToHome, onExplore }) {
   const [activeStar, setActiveStar] = useState(null);
 
   const triggerConstellationExplore = () => {
-    // Celebratory stardust fireworks
     confetti({
       particleCount: 70,
       spread: 90,
       origin: { y: 0.65 },
-      colors: ['#fde047', '#fef08a', '#eab308', '#f59e0b', '#ffffff', '#c084fc']
+      colors: ['#c9a84c', '#d4af6f', '#e8c97a', '#f0e0a0', '#ffffff', '#f5e6c8']
     });
 
     if (onExplore) {
@@ -34,21 +33,14 @@ export default function ConstellationPage({ onBackToHome, onExplore }) {
 
   return (
     <main className="scene-viewport constellation-page-viewport">
-      {/* Background HD Scenery */}
-      <div className="scene-background constellation-bg-layer" />
+      {/* Ambient Gold Glow */}
+      <div className="page-ambient-glow" />
 
-      {/* Atmospheric Vignette & Depth */}
-      <div className="sky-depth-overlay" />
+      {/* Gold Particle Canvas */}
+      <GoldParticleCanvas />
 
-      {/* Live Canvas Starfield */}
-      <StarrySkyCanvas />
-
-      {/* Dual Lantern Glows (Left & Right) */}
-      <div className="lantern-glow-pulse lantern-left-pulse" />
-      <div className="lantern-glow-pulse lantern-right-pulse" />
-
-      {/* Back to Home Button (Discreet top-left) */}
-      <button 
+      {/* Back Button */}
+      <button
         className="nav-back-btn"
         onClick={onBackToHome}
         title="Return to Welcome Page"
@@ -59,8 +51,8 @@ export default function ConstellationPage({ onBackToHome, onExplore }) {
 
       {/* UI Overlay Layer */}
       <div className="scene-ui-layer">
-        {/* Top-Left Handwritten Poem & Heart */}
-        <motion.div 
+        {/* Top-Left Poem */}
+        <motion.div
           className="constellation-top-left-poem"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -72,8 +64,8 @@ export default function ConstellationPage({ onBackToHome, onExplore }) {
           <p>A brighter you... ♡</p>
         </motion.div>
 
-        {/* Top-Right Handwritten Poem (Under Moon) */}
-        <motion.div 
+        {/* Top-Right Poem */}
+        <motion.div
           className="constellation-top-right-poem"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -86,10 +78,10 @@ export default function ConstellationPage({ onBackToHome, onExplore }) {
           <p>Proud of you ... ♡</p>
         </motion.div>
 
-        {/* Centerpiece Container */}
+        {/* Centerpiece */}
         <div className="constellation-center-showcase">
-          {/* Main Titles */}
-          <motion.div 
+          {/* Titles */}
+          <motion.div
             className="constellation-titles-wrap"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -101,16 +93,16 @@ export default function ConstellationPage({ onBackToHome, onExplore }) {
               <span className="title-believes-heart">♡</span>
             </div>
 
-            {/* Decorative Star Divider */}
+            {/* Gold Divider */}
             <div className="decorative-star-divider">
               <span className="divider-line" />
-              <span className="divider-star">⭐</span>
+              <span className="divider-star">✦</span>
               <span className="divider-line" />
             </div>
           </motion.div>
 
-          {/* Major 5-Star Constellation System */}
-          <motion.div 
+          {/* 5-Star Constellation System */}
+          <motion.div
             className="constellation-stars-system"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -118,9 +110,8 @@ export default function ConstellationPage({ onBackToHome, onExplore }) {
           >
             <svg viewBox="0 0 1050 380" className="constellation-system-svg" fill="none">
               <defs>
-                {/* Luminous Glow Filter for Stars */}
                 <filter id="starGlowFilter" x="-40%" y="-40%" width="180%" height="180%">
-                  <feGaussianBlur stdDeviation="5" result="blur" />
+                  <feGaussianBlur stdDeviation="4" result="blur" />
                   <feMerge>
                     <feMergeNode in="blur" />
                     <feMergeNode in="SourceGraphic" />
@@ -128,18 +119,18 @@ export default function ConstellationPage({ onBackToHome, onExplore }) {
                 </filter>
 
                 <radialGradient id="starHaloGrad">
-                  <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
-                  <stop offset="30%" stopColor="#fef08a" stopOpacity="0.75" />
-                  <stop offset="65%" stopColor="#f59e0b" stopOpacity="0.35" />
-                  <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
+                  <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
+                  <stop offset="25%" stopColor="#e8c97a" stopOpacity="0.7" />
+                  <stop offset="60%" stopColor="#c9a84c" stopOpacity="0.3" />
+                  <stop offset="100%" stopColor="#c9a84c" stopOpacity="0" />
                 </radialGradient>
               </defs>
 
-              {/* Connecting Constellation Starlight Beams */}
+              {/* Constellation Beam */}
               <motion.path
                 d="M 150,110 L 340,260 L 530,150 L 720,270 L 900,130"
-                stroke="rgba(254, 240, 138, 0.85)"
-                strokeWidth="2.4"
+                stroke="rgba(201, 168, 76, 0.75)"
+                strokeWidth="2.2"
                 className="constellation-beam-line"
                 filter="url(#starGlowFilter)"
                 initial={{ pathLength: 0 }}
@@ -147,18 +138,18 @@ export default function ConstellationPage({ onBackToHome, onExplore }) {
                 transition={{ duration: 1.8, ease: 'easeInOut' }}
               />
 
-              {/* Secondary delicate starlight connection */}
+              {/* Secondary white glow line */}
               <path
                 d="M 150,110 L 340,260 L 530,150 L 720,270 L 900,130"
-                stroke="#ffffff"
-                strokeWidth="1.2"
-                opacity="0.9"
+                stroke="rgba(255,255,255,0.12)"
+                strokeWidth="1"
+                opacity="1"
               />
 
-              {/* The 5 Brilliant Flare Stars */}
+              {/* The 5 Stars */}
               {constellationStars.map((star) => (
-                <g 
-                  key={star.id} 
+                <g
+                  key={star.id}
                   transform={`translate(${star.x}, ${star.y})`}
                 >
                   <g
@@ -166,55 +157,53 @@ export default function ConstellationPage({ onBackToHome, onExplore }) {
                     onClick={() => setActiveStar(star)}
                     title={star.name}
                   >
-                    {/* Radiant Halo Ambient Disc */}
-                    <circle cx="0" cy="0" r="34" fill="url(#starHaloGrad)" />
+                    {/* Halo */}
+                    <circle cx="0" cy="0" r="32" fill="url(#starHaloGrad)" />
 
-                    {/* 8-Point Golden Diamond Rays */}
-                    {/* Vertical Long Rays */}
-                    <polygon points="0,-48 4,-9 0,0 -4,-9" fill="#fef08a" filter="url(#starGlowFilter)" />
-                    <polygon points="0,48 4,9 0,0 -4,9" fill="#fef08a" filter="url(#starGlowFilter)" />
-                    {/* Horizontal Long Rays */}
-                    <polygon points="-48,0 -9,-4 0,0 -9,4" fill="#fef08a" filter="url(#starGlowFilter)" />
-                    <polygon points="48,0 9,-4 0,0 9,4" fill="#fef08a" filter="url(#starGlowFilter)" />
+                    {/* 8-Point rays — champagne gold */}
+                    <polygon points="0,-44 3.5,-8 0,0 -3.5,-8" fill="#c9a84c" filter="url(#starGlowFilter)" />
+                    <polygon points="0,44 3.5,8 0,0 -3.5,8" fill="#c9a84c" filter="url(#starGlowFilter)" />
+                    <polygon points="-44,0 -8,-3.5 0,0 -8,3.5" fill="#c9a84c" filter="url(#starGlowFilter)" />
+                    <polygon points="44,0 8,-3.5 0,0 8,3.5" fill="#c9a84c" filter="url(#starGlowFilter)" />
 
-                    {/* Diagonal Shorter Rays */}
-                    <polygon points="-24,-24 -5,-7 0,0 -7,-5" fill="#fde047" opacity="0.95" />
-                    <polygon points="24,-24 5,-7 0,0 7,-5" fill="#fde047" opacity="0.95" />
-                    <polygon points="-24,24 -5,7 0,0 -7,5" fill="#fde047" opacity="0.95" />
-                    <polygon points="24,24 5,7 0,0 7,5" fill="#fde047" opacity="0.95" />
+                    {/* Diagonal rays */}
+                    <polygon points="-22,-22 -4.5,-6 0,0 -6,-4.5" fill="#e8c97a" opacity="0.9" />
+                    <polygon points="22,-22 4.5,-6 0,0 6,-4.5" fill="#e8c97a" opacity="0.9" />
+                    <polygon points="-22,22 -4.5,6 0,0 -6,4.5" fill="#e8c97a" opacity="0.9" />
+                    <polygon points="22,22 4.5,6 0,0 6,4.5" fill="#e8c97a" opacity="0.9" />
 
-                    {/* Brilliant White-Gold Core */}
-                    <circle cx="0" cy="0" r="6" fill="#ffffff" filter="url(#starGlowFilter)" />
-                    <circle cx="0" cy="0" r="3.5" fill="#fef08a" />
+                    {/* Core */}
+                    <circle cx="0" cy="0" r="5.5" fill="#ffffff" filter="url(#starGlowFilter)" />
+                    <circle cx="0" cy="0" r="3" fill="#e8c97a" />
                   </g>
                 </g>
               ))}
             </svg>
           </motion.div>
 
-          {/* Explore My Constellation CTA Button */}
-          <motion.div 
+          {/* CTA Button */}
+          <motion.div
             style={{ position: 'relative', marginTop: '16px' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.9 }}
           >
-            <button 
+            <button
               className="btn-begin-journey btn-explore-constellation"
               onClick={triggerConstellationExplore}
             >
-              <span className="btn-star-icon">⭐</span>
+              <span className="btn-star-icon">✦</span>
               <span>Explore My Constellation</span>
-              <span style={{ fontSize: '1.25rem' }}>→</span>
+              <span style={{ fontSize: '1.1rem', opacity: 0.8 }}>→</span>
             </button>
           </motion.div>
         </div>
       </div>
 
-      {/* Memory / Star Detail Modal */}
-      <MemoryModal 
-        activeItem={activeStar} 
-        onClose={() => setActiveStar(null)} 
+      {/* Star Detail Modal */}
+      <MemoryModal
+        activeItem={activeStar}
+        onClose={() => setActiveStar(null)}
       />
     </main>
   );

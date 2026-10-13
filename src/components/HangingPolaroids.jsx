@@ -7,13 +7,13 @@ import photoTown from '../assets/photo_town.jpg';
 export default function HangingPolaroids({ onSelectMemory }) {
   return (
     <div className="polaroids-hang-tree">
-      {/* Hanging Strings from Branches */}
+      {/* Hanging Strings — thin gold lines */}
       <svg className="string-wires-svg" viewBox="0 0 420 480" fill="none">
-        <path d="M 50,20 Q 160,80 260,40" stroke="rgba(255, 235, 180, 0.45)" strokeWidth="1.2" />
-        <path d="M 30,120 Q 140,170 240,140" stroke="rgba(255, 235, 180, 0.4)" strokeWidth="1.2" />
+        <path d="M 50,20 Q 160,80 260,40" stroke="rgba(201, 168, 76, 0.38)" strokeWidth="1" />
+        <path d="M 30,120 Q 140,170 240,140" stroke="rgba(201, 168, 76, 0.32)" strokeWidth="1" />
       </svg>
 
-      {/* Polaroid 1: Sunset Bridge (Top Right of the cluster) */}
+      {/* Polaroid 1: Sunset */}
       <motion.div
         className="polaroid-card polaroid-top-sunset"
         initial={{ rotate: 5 }}
@@ -23,14 +23,13 @@ export default function HangingPolaroids({ onSelectMemory }) {
         onClick={() => onSelectMemory('polaroid1')}
         title="Sunset by the Waters"
       >
-        <div className="wooden-clip" />
         <div className="polaroid-photo-frame">
           <img src={photoSunset} alt="Sunset by the Waters" className="polaroid-img" />
           <div className="photo-gloss-sheen" />
         </div>
       </motion.div>
 
-      {/* Polaroid 2: Daisies (Middle Left, Overlapping Sunset) */}
+      {/* Polaroid 2: Daisies */}
       <motion.div
         className="polaroid-card polaroid-mid-daisies"
         initial={{ rotate: -12 }}
@@ -40,14 +39,13 @@ export default function HangingPolaroids({ onSelectMemory }) {
         onClick={() => onSelectMemory('polaroid2')}
         title="Field of White Daisies"
       >
-        <div className="wooden-clip" />
         <div className="polaroid-photo-frame">
           <img src={photoDaisies} alt="Field of Daisies" className="polaroid-img" />
           <div className="photo-gloss-sheen" />
         </div>
       </motion.div>
 
-      {/* Polaroid 3: Historic Town (Lower, Tucked Under Daisies) */}
+      {/* Polaroid 3: Historic Town */}
       <motion.div
         className="polaroid-card polaroid-low-town"
         initial={{ rotate: 6 }}
@@ -57,29 +55,10 @@ export default function HangingPolaroids({ onSelectMemory }) {
         onClick={() => onSelectMemory('polaroid3')}
         title="Historic Rooftops"
       >
-        <div className="tape-strip tape-town-top" />
         <div className="polaroid-photo-frame">
           <img src={photoTown} alt="Historic Rooftops" className="polaroid-img" />
           <div className="photo-gloss-sheen" />
         </div>
-      </motion.div>
-
-      {/* Kraft Paper Sticky Note (Overlapping Lower Cluster) */}
-      <motion.div
-        className="kraft-sticky-note"
-        initial={{ rotate: -3 }}
-        animate={{ rotate: [-4, -2, -4] }}
-        transition={{ repeat: Infinity, duration: 6.5, ease: 'easeInOut', delay: 0.5 }}
-        whileHover={{ scale: 1.08, rotate: 0, zIndex: 40 }}
-        onClick={() => onSelectMemory('note')}
-        title="Read Note: Different places... Same dreams... ♡"
-      >
-        <div className="tape-strip tape-note-top" />
-        <div className="tape-strip tape-note-left" />
-        <p className="note-text-hand">Different</p>
-        <p className="note-text-hand">places...</p>
-        <p className="note-text-hand">Same dreams...</p>
-        <p className="note-text-heart">♡</p>
       </motion.div>
     </div>
   );

@@ -23,7 +23,7 @@ const journalEntries = [
   }
 ];
 
-export default function JournalPage({ onBackToLetter }) {
+export default function JournalPage({ onBackToLetter, onCelebrate }) {
   const [entryIndex, setEntryIndex] = useState(0);
 
   const handleCelebrate = () => {
@@ -33,6 +33,10 @@ export default function JournalPage({ onBackToLetter }) {
       origin: { y: 0.6 },
       colors: ['#c9a84c', '#d4af6f', '#e8c97a', '#f0e0a0', '#ffffff', '#f5e6c8']
     });
+    // Navigate to Friends page after a short delay
+    if (onCelebrate) {
+      setTimeout(() => onCelebrate(), 500);
+    }
   };
 
   const currentEntry = journalEntries[entryIndex];

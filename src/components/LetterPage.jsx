@@ -32,28 +32,29 @@ const pagesData = [
 ];
 
 // Configuration for the 3 columns of infinitely moving Polaroids
+// 15 photos from /public/Childhood distributed across columns
 const col1Items = [
-  { id: '1-1', rot: -2, hasPlay: true },
-  { id: '1-2', rot: 3, hasPlay: false },
-  { id: '1-3', rot: -1.5, hasPlay: false },
-  { id: '1-4', rot: 2.5, hasPlay: true },
-  { id: '1-5', rot: -3, hasPlay: false }
+  { id: '1-1', rot: -2, src: '/Childhood/IMG20260712221629.jpg' },
+  { id: '1-2', rot: 3, src: '/Childhood/IMG20260712221728.jpg' },
+  { id: '1-3', rot: -1.5, src: '/Childhood/IMG20260712221746.jpg' },
+  { id: '1-4', rot: 2.5, src: '/Childhood/IMG20260712221801.jpg' },
+  { id: '1-5', rot: -3, src: '/Childhood/IMG20260712221918.jpg' }
 ];
 
 const col2Items = [
-  { id: '2-1', rot: 2, hasPlay: false },
-  { id: '2-2', rot: -2.5, hasPlay: false },
-  { id: '2-3', rot: 3, hasPlay: false },
-  { id: '2-4', rot: -1, hasPlay: false },
-  { id: '2-5', rot: 2, hasPlay: false }
+  { id: '2-1', rot: 2, src: '/Childhood/IMG20260712221957.jpg' },
+  { id: '2-2', rot: -2.5, src: '/Childhood/IMG20260712222133.jpg' },
+  { id: '2-3', rot: 3, src: '/Childhood/IMG20260712222529.jpg' },
+  { id: '2-4', rot: -1, src: '/Childhood/IMG20260712222556.jpg' },
+  { id: '2-5', rot: 2, src: '/Childhood/IMG20260712222607.jpg' }
 ];
 
 const col3Items = [
-  { id: '3-1', rot: -1.5, hasPlay: false },
-  { id: '3-2', rot: 2.5, hasPlay: false },
-  { id: '3-3', rot: -3, hasPlay: false },
-  { id: '3-4', rot: 1.5, hasPlay: false },
-  { id: '3-5', rot: -2, hasPlay: true }
+  { id: '3-1', rot: -1.5, src: '/Childhood/IMG20260712222632.jpg' },
+  { id: '3-2', rot: 2.5, src: '/Childhood/IMG20260712222641.jpg' },
+  { id: '3-3', rot: -3, src: '/Childhood/IMG20260712222742.jpg' },
+  { id: '3-4', rot: 1.5, src: '/Childhood/IMG20260712222755.jpg' },
+  { id: '3-5', rot: -2, src: '/Childhood/extra.jpg' }
 ];
 
 export default function LetterPage({ onBackToConstellation, onMoveForward }) {
@@ -194,11 +195,11 @@ export default function LetterPage({ onBackToConstellation, onMoveForward }) {
               >
                 <div className="polaroid-clip-bulb" />
                 <div className="polaroid-inner-frame">
-                  {item.hasPlay && (
-                    <div className="polaroid-play-icon">
-                      <div className="play-triangle" />
-                    </div>
-                  )}
+                  <img
+                    src={item.src}
+                    alt="Childhood memory"
+                    className="polaroid-photo-img"
+                  />
                 </div>
                 <div className="polaroid-bottom-chin" />
               </div>
@@ -218,11 +219,11 @@ export default function LetterPage({ onBackToConstellation, onMoveForward }) {
               >
                 <div className="polaroid-clip-bulb" />
                 <div className="polaroid-inner-frame">
-                  {item.hasPlay && (
-                    <div className="polaroid-play-icon">
-                      <div className="play-triangle" />
-                    </div>
-                  )}
+                  <img
+                    src={item.src}
+                    alt="Childhood memory"
+                    className="polaroid-photo-img"
+                  />
                 </div>
                 <div className="polaroid-bottom-chin" />
               </div>
@@ -242,11 +243,11 @@ export default function LetterPage({ onBackToConstellation, onMoveForward }) {
               >
                 <div className="polaroid-clip-bulb" />
                 <div className="polaroid-inner-frame">
-                  {item.hasPlay && (
-                    <div className="polaroid-play-icon">
-                      <div className="play-triangle" />
-                    </div>
-                  )}
+                  <img
+                    src={item.src}
+                    alt="Childhood memory"
+                    className="polaroid-photo-img"
+                  />
                 </div>
                 <div className="polaroid-bottom-chin" />
               </div>

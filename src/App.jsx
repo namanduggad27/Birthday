@@ -8,6 +8,7 @@ import ConstellationPage from './components/ConstellationPage';
 import LetterPage from './components/LetterPage';
 import JournalPage from './components/JournalPage';
 import FriendsPage from './components/FriendsPage';
+import FamilyPage from './components/FamilyPage';
 import MemoryModal from './components/MemoryModal';
 import './App.css';
 
@@ -346,52 +347,23 @@ export default function App() {
         >
           <FriendsPage
             onBackToJournal={() => setCurrentPage('journal')}
-            onContinue={() => setCurrentPage('nextPhase')}
+            onContinue={() => setCurrentPage('family')}
           />
         </motion.div>
       )}
 
-      {currentPage === 'nextPhase' && (
-        <motion.main
-          key="nextPhase"
-          className="scene-viewport"
+      {currentPage === 'family' && (
+        <motion.div
+          key="family"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="page-ambient-glow" />
-          <GoldParticleCanvas />
-
-          <button
-            className="nav-back-btn"
-            onClick={() => setCurrentPage('friends')}
-            title="Back to Friends"
-          >
-            <ArrowLeft size={16} className="nav-back-icon" />
-            <span className="nav-back-text">Back</span>
-          </button>
-
-          <div className="friends-page-inner" style={{ justifyContent: 'center' }}>
-            <div className="chapter-badge-row">
-              <span className="chapter-badge-divider" />
-              <span className="chapter-badge-text">CHAPTER 5 ✦ THE FINALE</span>
-              <span className="chapter-badge-divider" />
-            </div>
-
-            <h1 className="friends-heading">The Next Phase</h1>
-
-            <p className="friends-cursive-sub">
-              Every chapter gets brighter &amp; sweeter... ♡
-            </p>
-
-            <div className="friends-divider">
-              <span className="bottom-rule-line" />
-              <span className="bottom-rule-star">✦</span>
-              <span className="bottom-rule-line" />
-            </div>
-          </div>
-        </motion.main>
+          <FamilyPage
+            onBackToFriends={() => setCurrentPage('friends')}
+          />
+        </motion.div>
       )}
     </AnimatePresence>
   );

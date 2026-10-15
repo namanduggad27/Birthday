@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Sparkles, Heart } from 'lucide-react';
+import { ArrowLeft, X } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import GoldParticleCanvas from './StarrySkyCanvas';
 
@@ -8,23 +8,50 @@ const journalEntries = [
   {
     id: 1,
     tag: 'CHAPTER 2',
-    titleLine1: 'Golden',
-    titleLine2: 'Moments',
-    subtitle: 'Sunsets, laughter, and timeless adventures ♡',
-    text: "From the quiet talks under the dusk sky to the unplanned moments that turned into our favorite stories, every memory with you is dipped in gold. You turn ordinary days into unforgettable adventures just by being your vibrant self. ♥"
+    titleLine1: 'Growing',
+    titleLine2: 'Up',
+    pageSubtitle: 'Page 1 — School Days',
+    subtitle: 'Same girl, just a little older ♡',
+    text: "From school bags and classrooms to those random laughs with friends, these were the days when even the smallest things could become a whole memory 😂❤️ New faces, new experiences, and probably a few stories that still make you laugh whenever you think about them."
   },
   {
     id: 2,
     tag: 'CHAPTER 2',
-    titleLine1: 'Unwritten',
-    titleLine2: 'Horizons',
-    subtitle: 'Every sunrise brings a new dream to chase ♡',
-    text: "Looking out towards the horizon, watching the first light touch the mountains, it feels like the world is pausing just to wish you a wonderful year ahead. Keep that wild spark in your eyes, that gentle kindness in your heart, and keep shining brighter than every star in this sky. ♥"
+    titleLine1: 'Growing',
+    titleLine2: 'Up',
+    pageSubtitle: 'Page 2 — The People & The Memories',
+    subtitle: 'Same girl, just a little older ♡',
+    text: "Somewhere between classes, conversations, group pictures, and all those little everyday moments, people started becoming an important part of your story. Some memories might be blurry now, but the people in them will always remind you of a version of life that was a little different. 🤍"
+  },
+  {
+    id: 3,
+    tag: 'CHAPTER 2',
+    titleLine1: 'Growing',
+    titleLine2: 'Up',
+    pageSubtitle: 'Page 3 — Slowly Growing Up',
+    subtitle: 'Same girl, just a little older ♡',
+    text: "And without really noticing, you started growing into the person you are today. A little more confident, a little more independent, with new dreams and a lot more stories to tell. The little girl is still there somewhere — just with better pictures and probably more attitude now. 😂✨"
   }
+];
+
+// 8 Teen photos from /public/teen/ arranged on a 2-tier fairy-light garland wall
+const tier1Photos = [
+  { id: 't-1', src: '/teen/IMG-20221114-WA0102.jpg', rot: -3, note: 'Memories ♡' },
+  { id: 't-2', src: '/teen/IMG-20221210-WA0057.jpg', rot: 3.5, note: 'School days' },
+  { id: 't-3', src: '/teen/IMG-20230126-WA0017.jpg', rot: -2, note: 'Good times ✨' },
+  { id: 't-4', src: '/teen/IMG-20230211-WA0213.jpg', rot: 4, note: 'Unplanned ♡' }
+];
+
+const tier2Photos = [
+  { id: 't-5', src: '/teen/IMG20230329161807.jpg', rot: 2.5, note: 'Growing up' },
+  { id: 't-6', src: '/teen/IMG20260712222246.jpg', rot: -3.5, note: 'Smiles ✦' },
+  { id: 't-7', src: '/teen/IMG20260712222300.jpg', rot: 2, note: 'Chapters ♡' },
+  { id: 't-8', src: '/teen/IMG20260712222644.jpg', rot: -1.5, note: 'Forever ✨' }
 ];
 
 export default function JournalPage({ onBackToLetter, onCelebrate }) {
   const [entryIndex, setEntryIndex] = useState(0);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
 
   const handleCelebrate = () => {
     confetti({
@@ -83,11 +110,18 @@ export default function JournalPage({ onBackToLetter, onCelebrate }) {
               <span className="title-row-two">{currentEntry.titleLine2}</span>
             </h1>
 
-            {/* Subtitle */}
+            {/* Subtitle / Description */}
             <div className="chapter-subtitle-row">
               <span className="chapter-sub-ornament">✦──</span>
               <span className="chapter-subtitle-text">{currentEntry.subtitle}</span>
             </div>
+
+            {/* Page Subtitle / Topic */}
+            {currentEntry.pageSubtitle && (
+              <div className="chapter-page-section-title">
+                {currentEntry.pageSubtitle}
+              </div>
+            )}
 
             {/* Journal Body Text */}
             <p className="chapter-paragraph-text">
@@ -140,6 +174,96 @@ export default function JournalPage({ onBackToLetter, onCelebrate }) {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {/* ── Right Side: 2-Tier Fairy-Light Polaroid Garland Wall (Non-scrolling) ── */}
+      <div className="journal-garland-wall">
+
+        {/* Tier 1 - Top String */}
+        <div className="garland-tier-row">
+          <div className="garland-wire-line" />
+          {tier1Photos.map((photo) => (
+            <div
+              key={photo.id}
+              className="garland-polaroid-item"
+              style={{ transform: `rotate(${photo.rot}deg)` }}
+              onClick={() => setSelectedPhoto(photo.src)}
+              title="Click to view full photo"
+            >
+              <div className="garland-clip-pin" />
+              <div className="polaroid-inner-frame">
+                <img
+                  src={photo.src}
+                  alt="Growing up memory"
+                  className="polaroid-photo-img"
+                  loading="lazy"
+                />
+              </div>
+              <span className="garland-polaroid-chin">{photo.note}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Tier 2 - Bottom String */}
+        <div className="garland-tier-row">
+          <div className="garland-wire-line" />
+          {tier2Photos.map((photo) => (
+            <div
+              key={photo.id}
+              className="garland-polaroid-item"
+              style={{ transform: `rotate(${photo.rot}deg)` }}
+              onClick={() => setSelectedPhoto(photo.src)}
+              title="Click to view full photo"
+            >
+              <div className="garland-clip-pin" />
+              <div className="polaroid-inner-frame">
+                <img
+                  src={photo.src}
+                  alt="Growing up memory"
+                  className="polaroid-photo-img"
+                  loading="lazy"
+                />
+              </div>
+              <span className="garland-polaroid-chin">{photo.note}</span>
+            </div>
+          ))}
+        </div>
+
+      </div>
+
+      {/* Lightbox Modal for Full View */}
+      <AnimatePresence>
+        {selectedPhoto && (
+          <motion.div
+            className="childhood-modal-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedPhoto(null)}
+          >
+            <motion.div
+              className="childhood-modal-card"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="childhood-modal-close-btn"
+                onClick={() => setSelectedPhoto(null)}
+                title="Close"
+              >
+                <X size={18} />
+              </button>
+              <img
+                src={selectedPhoto}
+                alt="Growing Up Memory Enlarged"
+                className="childhood-modal-img"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }

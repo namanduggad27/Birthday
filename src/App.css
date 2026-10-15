@@ -1966,3 +1966,325 @@
   color: rgba(201,168,76,0.75);
   margin: 0;
 }
+
+/* ============================================================ */
+/* CHAPTER 5 (The Place Where Love Begins - Family Photo)       */
+/* ============================================================ */
+
+.family-page-viewport {
+  background-color: #080808;
+  position: relative;
+  overflow: hidden;
+}
+
+.family-page-scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 20;
+  padding: 44px 24px 60px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201,168,76,0.3) transparent;
+}
+
+.family-page-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.family-page-scroll::-webkit-scrollbar-thumb {
+  background: rgba(201,168,76,0.3);
+  border-radius: 4px;
+}
+
+.family-page-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.family-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.8vw, 3.6rem);
+  font-weight: 500;
+  color: #f2f2f2;
+  letter-spacing: 0.5px;
+  line-height: 1.15;
+  margin: 6px 0 5px 0;
+  text-shadow: 0 0 24px rgba(201,168,76,0.2);
+}
+
+.family-cursive-sub {
+  font-family: var(--font-cursive);
+  font-size: clamp(1.3rem, 2.2vw, 2.3rem);
+  color: #c9a84c;
+  line-height: 1.2;
+  margin-bottom: 4px;
+  text-shadow: 0 0 10px rgba(201,168,76,0.5), 0 0 24px rgba(201,168,76,0.22);
+}
+
+/* Direct Full-Size Photo Area (No box container) */
+.family-photo-wrapper {
+  width: 100%;
+  max-width: 1040px;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.family-full-img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 72vh;
+  object-fit: contain;
+  display: block;
+  border-radius: 6px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.85);
+}
+
+/* Placeholder state while awaiting user photo */
+.family-photo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 60px 24px;
+  text-align: center;
+  background: transparent;
+  border: none;
+}
+
+.family-placeholder-heart {
+  color: #c9a84c;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 16px rgba(201,168,76,0.6));
+  animation: familyHeartbeat 2.6s infinite ease-in-out;
+}
+
+@keyframes familyHeartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.family-placeholder-title {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  color: #f0f0f0;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.family-placeholder-sub {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.7);
+}
+
+/* ============================================================ */
+/* CHILDHOOD POLAROID PHOTOS (Chapter 1)                        */
+/* ============================================================ */
+
+/* Ensure the whole image is 100% visible, no part is cut */
+.polaroid-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  background-color: #0c0c0c;
+}
+
+/* Lightbox Modal for enlarged childhood photo */
+.childhood-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  z-index: 250;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.childhood-modal-card {
+  position: relative;
+  max-width: 90vw;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #0d0d0d;
+  border: 1px solid rgba(201, 168, 76, 0.45);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.95), 0 0 35px rgba(201, 168, 76, 0.2);
+  padding: 12px;
+}
+
+.childhood-modal-img {
+  max-width: 82vw;
+  max-height: 78vh;
+  object-fit: contain;
+  display: block;
+  border-radius: 4px;
+}
+
+.childhood-modal-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(20, 20, 20, 0.85);
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  color: #c9a84c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.childhood-modal-close-btn:hover {
+  background: rgba(201, 168, 76, 0.2);
+  border-color: #c9a84c;
+  color: #ffffff;
+  transform: rotate(90deg);
+}
+
+/* Page Section Title (e.g. Page 1 — School Days) */
+.chapter-page-section-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.1rem, 1.35vw, 1.45rem);
+  color: #f7e8c5;
+  letter-spacing: 0.5px;
+  margin: 0 0 10px 0;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* ============================================================ */
+/* CHAPTER 2: TEEN POLAROID FAIRY-LIGHT GARLAND WALL            */
+/* ============================================================ */
+
+.journal-garland-wall {
+  position: absolute;
+  left: 47%;
+  right: 2%;
+  top: 0;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 36px;
+  padding: 40px 16px;
+  pointer-events: auto;
+}
+
+.garland-tier-row {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding-top: 18px;
+}
+
+/* Horizontal Fairy Light String Wire */
+.garland-wire-line {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(201, 168, 76, 0.45) 8%, rgba(201, 168, 76, 0.6) 50%, rgba(201, 168, 76, 0.45) 92%, transparent 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Individual Polaroid hanging on the string */
+.garland-polaroid-item {
+  position: relative;
+  width: clamp(120px, 11vw, 165px);
+  aspect-ratio: 1 / 1.25;
+  background: #0e0e0e;
+  border-radius: 4px;
+  border: 1px solid rgba(201, 168, 76, 0.28);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.8), 0 2px 8px rgba(0, 0, 0, 0.6);
+  padding: 8px 8px 24px 8px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  z-index: 5;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.32s ease, border-color 0.32s ease;
+  transform-origin: top center;
+}
+
+.garland-polaroid-item:hover {
+  transform: scale(1.15) rotate(0deg) translateY(-8px) !important;
+  z-index: 30;
+  border-color: rgba(201, 168, 76, 0.7);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.95), 0 0 24px rgba(201, 168, 76, 0.35);
+}
+
+/* Gold Hanging Clip Pin on the wire */
+.garland-clip-pin {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 14px;
+  background: linear-gradient(to bottom, #d4af6f, #a88434);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(201, 168, 76, 0.8);
+  z-index: 10;
+}
+
+.garland-clip-pin::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff5d6;
+  box-shadow: 0 0 8px #c9a84c, 0 0 14px rgba(201, 168, 76, 0.8);
+  animation: garlandBulbTwinkle 3s infinite ease-in-out;
+}
+
+@keyframes garlandBulbTwinkle {
+  0%, 100% { opacity: 0.9; transform: translateX(-50%) scale(1); }
+  50% { opacity: 0.4; transform: translateX(-50%) scale(0.85); }
+}
+
+.garland-polaroid-chin {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-cursive);
+  font-size: 13px;
+  color: rgba(201, 168, 76, 0.65);
+  pointer-events: none;
+  letter-spacing: 0.5px;
+}
